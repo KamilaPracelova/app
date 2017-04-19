@@ -8,6 +8,10 @@ angular.module('storyServices', [])
             return $http.post('/api/createstory', storyData);
         };
 
+        storyFactory.editStory = function (storyData) {
+            return $http.post('/api/editstory', storyData);
+        };
+
                 // Register story in database
         storyFactory.createDog = function (dogData) {
             return $http.post('/api/createdog', dogData);
@@ -19,15 +23,15 @@ angular.module('storyServices', [])
             return $http.get('/api/allstories/');
         };
 
+        // get all stories for a specified user (id)
+        storyFactory.getAllUserStories = function () {
+            return $http.get('/api/alluserstories');
+        };
+
         // Edit a story
         storyFactory.getStory = function (id) {
             return $http.get('/api/story/' + id);
         };
-
-        //     // Edit a story
-        // storyFactory.editStory = function(id) {
-        //     return $http.get('/api/editstory/' + id);
-        // };
 
         return storyFactory; // Return storyFactory object
     });

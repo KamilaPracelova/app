@@ -15,7 +15,7 @@ module.exports = function (router) {
         user.email = req.body.email; // Save email from request to User object
         user.name = req.body.name; // Save name from request to User object
         // Check if request is valid and not empty or null
-         if (req.body.username === null || req.body.username === '' || req.body.password === null || req.body.password === '' || req.body.email === null || req.body.email === '' || req.body.name === null || req.body.name === '') {
+        if (req.body.username === null || req.body.username === '' || req.body.password === null || req.body.password === '' || req.body.email === null || req.body.email === '' || req.body.name === null || req.body.name === '') {
             res.json({ success: false, message: 'Ensure username, email, and password were provided' });
         } else {
             // Save new user to database
@@ -177,7 +177,7 @@ module.exports = function (router) {
                             res.json({ success: false, message: 'No user found' }); // Return error
                         } else {
                             // Check if user has editing/deleting privileges 
-                            if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                            if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                                 // Check if users were retrieved from database
                                 if (!users) {
                                     res.json({ success: false, message: 'Users not found' }); // Return error
@@ -235,7 +235,7 @@ module.exports = function (router) {
                     res.json({ success: false, message: 'No user found' }); // Return error
                 } else {
                     // Check if logged in user has editing privileges
-                    if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                    if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                         // Find the user to be editted
                         User.findOne({ _id: editUser }, function (err, user) {
                             if (err) {
@@ -276,7 +276,7 @@ module.exports = function (router) {
                     // Check if a change to name was requested
                     if (newName) {
                         // Check if person making changes has appropriate access
-                        if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                        if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                             // Look for user in database
                             User.findOne({ _id: editUser }, function (err, user) {
                                 if (err) {
@@ -306,7 +306,7 @@ module.exports = function (router) {
                     // Check if a change to username was requested
                     if (newUsername) {
                         // Check if person making changes has appropriate access
-                        if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                        if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                             // Look for user in database
                             User.findOne({ _id: editUser }, function (err, user) {
                                 if (err) {
@@ -336,7 +336,7 @@ module.exports = function (router) {
                     // Check if change to e-mail was requested
                     if (newEmail) {
                         // Check if person making changes has appropriate access
-                        if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                        if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                             // Look for user that needs to be editted
                             User.findOne({ _id: editUser }, function (err, user) {
                                 if (err) {
@@ -366,7 +366,7 @@ module.exports = function (router) {
                     // Check if a change to permission was requested
                     if (newPermission) {
                         // Check if user making changes has appropriate access
-                        if (mainUser.permission === 'admin' || mainUser.permission === 'moderator') {
+                        if (mainUser.permission === 'admin' || mainUser.permission === 'curator') {
                             // Look for user to edit in database
                             User.findOne({ _id: editUser }, function (err, user) {
                                 if (err) {
@@ -406,8 +406,8 @@ module.exports = function (router) {
                                                 });
                                             }
                                         }
-                                        // Check if attempting to set the 'moderator' permission
-                                        if (newPermission === 'moderator') {
+                                        // Check if attempting to set the 'curator' permission
+                                        if (newPermission === 'curator') {
                                             // Check if the current permission is 'admin'
                                             if (user.permission === 'admin') {
                                                 // Check if user making changes has access
@@ -468,29 +468,62 @@ module.exports = function (router) {
 
     //Route to create a cultural object
     router.post('/createobject', function (req, res) {
-        var object = new Object();
 
-        object.title = req.body.title; // Save username from request to User object
-        object.creator = req.body.creator;
-        object.subject = req.body.subject;
-        object.description = req.body.description;
-        object.year = req.body.year;
-        object.period = req.body.period;
-        object.identifier = req.body.identifier;
-        object.authors_rights = req.body.authors_rights;
-        object.property_rights = req.body.property_rights;
-        object.format = req.body.format;
-        object.classification = req.body.classification;
-        object.work_type = req.body.work_type;
-        object.measurements = req.body.measurements;
-        object.techniques = req.body.techniques;
-        object.materials = req.body.materials;
-        object.art_movement = req.body.art_movement;
-        object.placement = req.body.placement;
-        object.media_object = req.body.media_object;
-        res.json({ success: true, message: 'object created' });
-        object.save();
+        var username = req.decoded.username;
+        var userId;
+        User.findOne({ username: username }, function (err, user) {
+            if (!err) {
+                // get the user id for association
+                userId = user._id;
+
+                var object = new Object();
+                object.user_id = userId;
+                object.title = req.body.title; // Save username from request to User object
+                object.creator = req.body.creator;
+                object.subject = req.body.subject;
+                object.description = req.body.description;
+                object.year = req.body.year;
+                object.period = req.body.period;
+                object.identifier = req.body.identifier;
+                object.authors_rights = req.body.authors_rights;
+                object.property_rights = req.body.property_rights;
+                object.format = req.body.format;
+                object.classification = req.body.classification;
+                object.work_type = req.body.work_type;
+                object.measurements = req.body.measurements;
+                object.techniques = req.body.techniques;
+                object.materials = req.body.materials;
+                object.art_movement = req.body.art_movement;
+                object.placement = req.body.placement;
+                object.media_object = req.body.media_object;
+                //  res.json({ success: true, message: 'object created' });
+                object.save();
+
+                res.json({ success: true, message: 'object created' });
+            } else {
+                res.json({ success: false, message: 'could not find a user' });
+            }
+        });
     });
+
+    router.get('/alluserobjects', function (req, res) {
+        var username = req.decoded.username;
+
+        User.findOne({ username: username }, function (err, user) {
+            if (!err) {
+                Object.find({ user_id: user._id }, function (err, objects) {
+                    if (!err) {
+                        res.json({ success: true, objects: objects });
+                    } else {
+                        res.json({ success: false, message: 'error retrieving recipes' })
+                    }
+                });
+            } else {
+                res.json({ success: false, message: 'no user logged in / found' })
+            }
+        });
+    });
+
 
     //Route to get all cultural objects
     router.get('/allobjects', function (req, res) {
@@ -532,7 +565,7 @@ module.exports = function (router) {
     //     });
     // });
 
-    
+
 
     //Route to get one cultural object
     router.get('/object/:id', function (req, res) {
@@ -551,38 +584,46 @@ module.exports = function (router) {
         });
     });
 
-    // Route to create a story
-    router.post('/createstory', function (req, res) {
-        var story = new Story(); // Create new User object
-        //story.user = req.body.id;
-        story.story_title = req.body.story_title; // Save username from request to User object
-        story.story_subtitle = req.body.story_subtitle;
-        story.story_description = req.body.story_description;
-        story.story_title_image = req.body.story_title_image;
-        story.dogs.push({ name: 'Joe'});
-        //story.user = user._id;
-        //User.findOne({ username: req.body.username }).select('username').exec(function(err, user) {
-        res.json({ success: true, message: 'story created' });
-        //user.story.push({email: 'Daasds'});
-        story.save();
+    // get the currently logged in user
+    router.get('/getCurrentUser', function (req, res) {
+        var username = req.decoded.username;
+        User.findOne({ username: username }, function (err, user) {
+            if (!err) {
+                // return a success response
+                res.json({ success: true, user: user });
+            } else {
+                res.json({ success: false, message: 'could not find a user' });
+            }
+        });
     });
 
-          router.put('/addstory', function (req, res) {
-        // var storyToAdd = req.params.id;
-        var UserOfStory = req.body._id;
 
-        User.findOne({ _id: UserOfStory }, function (err, user) {
-            if(err) {
-                console.log(err); // Log any errors to the console
+
+    // Route to create a story
+    router.post('/createstory', function (req, res) {
+        // get the username first
+        var username = req.decoded.username;
+        var userId;
+
+        User.findOne({ username: username }, function (err, user) {
+            if (!err) {
+                // get the user id for association
+                userId = user._id;
+                // scaffold the new story object
+                var story = new Story();
+                story.user_id = userId;
+                story.story_title = req.body.story_title;
+                story.story_subtitle = req.body.story_subtitle;
+                story.story_description = req.body.story_description;
+                story.story_title_image = req.body.story_title_image;
+                story.save();
+                res.json({ success: true, message: 'story created' });
             } else {
-             console.log(user);
-             user.push({pribeh: 'pribeh'});
-        //do something depending on the number of documents affected
-            user.save();
-    }
-      }
-      );
-      });
+                res.json({ success: false, message: 'could not find a user' });
+            }
+        });
+    });
+
 
     //Route to get all stories
     router.get('/allstories', function (req, res) {
@@ -590,11 +631,28 @@ module.exports = function (router) {
             if (err) throw err;
             else {
                 res.json({ success: true, stories: stories });
-                //res.send(stories); 
+                //res.send(stories);
             }
         });
     });
 
+    router.get('/alluserstories', function (req, res) {
+        var username = req.decoded.username;
+
+        User.findOne({ username: username }, function (err, user) {
+            if (!err) {
+                Story.find({ user_id: user._id }, function (err, stories) {
+                    if (!err) {
+                        res.json({ success: true, stories: stories });
+                    } else {
+                        res.json({ success: false, message: 'error retrieving recipes' })
+                    }
+                });
+            } else {
+                res.json({ success: false, message: 'no user logged in / found' })
+            }
+        });
+    });
 
     //Route to get one story
     router.get('/story/:id', function (req, res) {
@@ -611,6 +669,21 @@ module.exports = function (router) {
                 }
             }
         });
+    });
+
+        // adding images to a story
+    router.post('/editstory', function (req, res) {
+        Story.findOneAndUpdate(
+            { "_id": req.body.id },
+            { $push: { "story_images": req.body.imgUrl } },
+            function (err, response) {
+                if (!err) {
+                    res.json({ status: true });
+                } else {
+                    res.json({ status: false, error: err })
+                }
+            }
+        );
     });
 
     return router; // Return the router object to server

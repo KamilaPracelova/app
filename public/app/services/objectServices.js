@@ -13,6 +13,11 @@ angular.module('objectServices', [])
         return $http.get('/api/allobjects/');
     };
 
+           // get all stories for a specified user (id)
+       objectFactory.getAllUserObjects = function () {
+            return $http.get('/api/alluserobjects');
+        };
+
     // // // Get all objects from database
     // objectFactory.getRelatedObjects = function(id) {
     //     return $http.get('/api/object/' + id);

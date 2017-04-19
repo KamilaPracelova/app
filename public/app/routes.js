@@ -7,34 +7,8 @@ var app = angular.module('appRoutes', ['ngRoute'])
         $routeProvider
 
             // Route: Home             
-            .when('/addroom', {
-                templateUrl: 'app/views/pages/stories/addroom.html',
-                controller: 'addRoomCtrl',
-                controllerAs: 'roomadd',
-            })
-
-            // Route: Home             
             .when('/', {
                 templateUrl: 'app/views/pages/home.html'
-            })
-
-           .when('/x', {
-                templateUrl: 'app/views/pages/x.html',
-                controller: 'SearchCtrl',
-            })
-
-
-            // Route: Get all cultural objects
-            .when('/searchobjects', {
-                templateUrl: 'app/views/pages/objects/searchobjects.html',
-                controller: 'allObjectCtrl',
-                controllerAs: 'objectall'
-            })
-
-
-            // Route: About Us (for testing purposes)
-            .when('/about', {
-                templateUrl: 'app/views/pages/about.html'
             })
 
             // Route: Create a cultural object
@@ -43,7 +17,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'createObjectCtrl',
                 controllerAs: 'objectcreate',
                 authenticated: true,
-                permission: ['admin', 'moderator']
+                permission: ['admin', 'curator']
             })
 
             // Route: Get all cultural objects
@@ -51,6 +25,74 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 templateUrl: 'app/views/pages/objects/allobjects.html',
                 controller: 'allObjectCtrl',
                 controllerAs: 'objectall'
+            })
+
+            .when('/myobjects', {
+                templateUrl: 'app/views/pages/objects/myobjects.html',
+                controller: 'userObjectsCtrl',
+                controllerAs: 'myobjectall',
+                authenticated: true,
+                permission: ['admin', 'curator']
+            })
+
+            // Route: Get one cultural object
+            .when('/object/:id', {
+                templateUrl: 'app/views/pages/objects/object.html',
+                controller: 'showObjectCtrl',
+                controllerAs: 'objectshow'
+            })
+
+            // Route: Get all object creators
+            .when('/allcreators', {
+                templateUrl: 'app/views/pages/objects/allcreators.html',
+                controller: 'allCreatorCtrl',
+                controllerAs: 'creatorall'
+            })
+
+            .when('/createstory', {
+                templateUrl: 'app/views/pages/stories/createstory.html',
+                controller: 'createStoryCtrl',
+                controllerAs: 'storycreate',
+                authenticated: true,
+                permission: ['admin', 'curator', 'user']
+            })
+
+            .when('/allstories', {
+                templateUrl: 'app/views/pages/stories/allstories.html',
+                controller: 'allStoryCtrl',
+                controllerAs: 'storyall'
+            })
+
+            .when('/mystories', {
+                templateUrl: 'app/views/pages/stories/mystories.html',
+                controller: 'userStoriesCtrl',
+                controllerAs: 'mystoryall',
+                authenticated: true,
+                permission: ['admin', 'curator', 'user' ]
+            })
+
+            // Route: About Us (for testing purposes)
+            .when('/story/:id', {
+                templateUrl: 'app/views/pages/stories/story.html',
+                controller: 'showStoryCtrl',
+                controllerAs: 'storyshow'
+            })
+
+            // adding images to stories
+            .when('/story/:id/addImages', {
+                templateUrl: 'app/views/pages/objects/addimages.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall',
+                authenticated: true,
+                permission: ['admin', 'curator', 'user' ]
+            })
+
+            .when('/editstory/:id', {
+                templateUrl: 'app/views/pages/stories/editstory.html',
+                controller: 'editStoryCtrl',
+                controllerAs: 'storyedit',
+                //authenticated: true,
+                //permission: ['admin', 'curator']
             })
 
             // Route: Get all cultural objects
@@ -80,64 +122,11 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'allObjectCtrl',
             })
 
-            // Route: Get one cultural object
-            .when('/object/:id', {
-                templateUrl: 'app/views/pages/objects/object.html',
-                controller: 'showObjectCtrl',
-                controllerAs: 'objectshow'
-            })
-
-            // Route: Get all object creators
-            .when('/allcreators', {
-                templateUrl: 'app/views/pages/objects/allcreators.html',
-                controller: 'allCreatorCtrl',
-                controllerAs: 'creatorall'
-            })
-
-            .when('/createstory', {
-                templateUrl: 'app/views/pages/stories/createstory.html',
-                controller: 'createStoryCtrl',
-                controllerAs: 'storycreate',
-                authenticated: true,
-                permission: ['admin', 'moderator', 'user']
-            })
-
-             .when('/createdog', {
-                templateUrl: 'app/views/pages/stories/createdog.html',
-                controller: 'createDogCtrl',
-                controllerAs: 'dogcreate',
-                authenticated: true,
-                permission: ['admin', 'moderator', 'user']
-            })
-
-
-              .when('/createfriend', {
-                templateUrl: 'app/views/pages/stories/createfriend.html',
-                controller: 'createFriendCtrl',
-                controllerAs: 'friendcreate',
-                authenticated: true,
-                permission: ['admin', 'moderator', 'user']
-            })
-
-            .when('/allstories', {
-                templateUrl: 'app/views/pages/stories/allstories.html',
-                controller: 'allStoryCtrl',
-                controllerAs: 'storyall'
-            })
-
-            // Route: About Us (for testing purposes)
-            .when('/story/:id', {
-                templateUrl: 'app/views/pages/stories/story.html',
-                controller: 'showStoryCtrl',
-                controllerAs: 'storyshow'
-            })
-
-            .when('/editstory/:id', {
-                templateUrl: 'app/views/pages/stories/editstory.html',
-                controller: 'editStoryCtrl',
-                controllerAs: 'storyedit',
-                //authenticated: true,
-                //permission: ['admin', 'moderator']
+            // Route: Get all cultural objects
+            .when('/searchobjects', {
+                templateUrl: 'app/views/pages/objects/searchobjects.html',
+                controller: 'allObjectCtrl',
+                controllerAs: 'objectall'
             })
 
             // Route: User Registration
@@ -225,24 +214,13 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 permission: ['admin']
             })
 
-
-                        // Route: Manage User Accounts
-            .when('/cat', {
-                templateUrl: 'app/views/pages/management/cat.html',
-                controller: 'catCtrl',
-                controllerAs: 'cat',
-                authenticated: true,
-                permission: ['admin']
-            })
-
-
             // Route: Edit a User
             .when('/edit/:id', {
                 templateUrl: 'app/views/pages/management/edit.html',
                 controller: 'editCtrl',
                 controllerAs: 'edit',
                 authenticated: true,
-                permission: ['admin', 'moderator']
+                permission: ['admin']
             })
 
             // Route: Search Database Users
@@ -251,7 +229,7 @@ var app = angular.module('appRoutes', ['ngRoute'])
                 controller: 'managementCtrl',
                 controllerAs: 'management',
                 authenticated: true,
-                permission: ['admin', 'moderator']
+                permission: ['admin']
             })
 
             .otherwise({ redirectTo: '/' }); // If user tries to access any other route, redirect to home page

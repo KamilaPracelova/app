@@ -1,7 +1,7 @@
-angular.module('objectController', ['objectServices'])
+angular.module('objectController', ['objectServices', 'storyServices'])
 
     // Create a cultural object
-    .controller('createObjectCtrl', function ($http, $location, Object) {
+    .controller('createObjectCtrl', function ($http, $location, Object, Story) {
 
         var app = this; // successMsg can be accessed outside the scope
         this.createObject = function (objectData) {
@@ -20,9 +20,26 @@ angular.module('objectController', ['objectServices'])
         };
     })
 
-    // Show all cultural objects
-    .controller('allObjectCtrl', function (Object, $scope, $http, $location, filterFilter, $routeParams) {
 
+  .controller('userObjectsCtrl', function(Object, $scope, $http, $location, User) {
+    var app = this;
+
+    function getAllUserObjects() {
+        // get the objects for a user
+        Object.getAllUserObjects().then(function(response) {
+          if (response.data.success) {
+            console.log(response); // rofl xD
+            app.objects = response.data.objects;
+          }
+        });
+    }
+
+    getAllUserObjects();
+  })
+
+
+    // Show all cultural objects
+    .controller('allObjectCtrl', function (Object, Story, $scope, $http, $location, filterFilter, $routeParams) {
         var app = this;
 
         var uniqueItems = function (data, key) {
@@ -40,9 +57,9 @@ angular.module('objectController', ['objectServices'])
         };
 
         function getAllObjects() {
-            Object.getAllObjects().then(function (data) {
-                if (data.data.success) {
-                    app.objects = data.data.objects;
+            Object.getAllObjects().then(function (response) {
+                if (response.data.success) {
+                    app.objects = response.data.objects;
                     $scope.objects = app.objects
                     console.log(data);
                 }
@@ -202,24 +219,22 @@ angular.module('objectController', ['objectServices'])
             }
         }
 
-        // $scope.fcia = function () {
-        //     console.log('madona')
+        $scope.objectId = $routeParams.id;
+        $scope.saveImage = function(imgUrl, objectId) {
+            var data = {
+                id: objectId,
+                imgUrl: imgUrl
+            };
 
-        // }
-
-        //      Object.getObject($routeParams.id).then(function (data) {
-
-        //         if (data.data.success) {
-
-        //             console.log($routeParams.id);
-        //             console.log(data);
-        //   }
-        //         else {
-        //             console.log('errorMsg');
-        //         }
-        //      });
-
-
+            Story.editStory(data).then(function(response) {
+                if (response.status === 200) {
+                    app.successMsg = data.data.message;
+                    // $location.path('/story/' + objectId);
+                } else {
+                    app.errorMsg = data.data.message;
+                }
+            });
+        }
     })
 
     .filter('count', function () {

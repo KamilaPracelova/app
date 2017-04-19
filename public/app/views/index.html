@@ -25,7 +25,7 @@
     <script src="app/controllers/userCtrl.js"></script>
     <script src="app/controllers/mainCtrl.js"></script>
     <script src="app/controllers/managementCtrl.js"></script>
-    <script src="app/controllers/storyCtrl.js"></script>                                              
+    <script src="app/controllers/storyCtrl.js"></script>
     <script src="app/controllers/objectCtrl.js"></script>
     <script src="app/controllers/addCtrl.js"></script>
 
@@ -52,14 +52,14 @@
     <!--<script src="../bower_components/angularjs-geolocation/dist/angularjs-geolocation.min.js"></script>-->
 
     <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
     <!-- Fonts -->
-    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/animate.css" rel="stylesheet">
     <!-- Squad theme CSS -->
-    <link href="css/style.css" rel="stylesheet">
-    <link href="color/default.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/color/default.css" rel="stylesheet">
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-custom" ng-app="userApp" ng-controller="mainCtrl as main">
@@ -95,7 +95,7 @@
                     <li class="active"><a href="/">Domov</a></li>
                     <!--<li><a href="#service">About</a></li>-->
                     <li><a href="/allobjects">Umelecké objekty</a></li>
-                    <li><a href="/allcreators">Autori</a></li>
+                    <li><a href="/allcreators">Autori objektov</a></li>
                     <li><a href="/allstories">Príbehy</a></li>
 
                     <li><a ng-show="!main.isLoggedIn" href="/login">Prihlásiť sa</a></li>
@@ -108,9 +108,9 @@
 
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="#">Obľúbené</a></li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/createobject">Vytvoriť objekt</a></li>
-                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/allobjects">Moje objekty</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/myobjects">Moje objekty</a></li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/createstory">Vytvoriť story</a></li>
-                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/allstories">Moje story</a></li>
+                            <li><a ng-show="main.isLoggedIn && main.authorized" href="/mystories">Moje story</a></li>
                             <li role="separator" class="divider"></li>
                             <li class="dropdown-header">Profil</li>
                             <li><a ng-show="main.isLoggedIn && main.authorized" href="/profile">Profil</a></li>
@@ -376,17 +376,16 @@
 
         <footer>
             <div class="container">
+                <div class="wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="page-scroll marginbot-30">
+                        <a href="#intro" id="totop" class="btn btn-circle">
+                            <i class="fa fa-angle-double-up animated"></i>
+                        </a>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12 col-lg-12">
-                        <div class="wow fadeInUp" data-wow-delay="0.2s">
-                            <div class="page-scroll marginbot-30">
-                                <a href="#intro" id="totop" class="btn btn-circle">
-                                    <i class="fa fa-angle-double-up animated"></i>
-                                </a>
-                            </div>
-                        </div>
                     </div>
-                    <!--<p>&copy;SquadFREE. All rights reserved.</p>-->
                     <div class="wow fadeInUp" data-wow-delay="0.2s">
 
                         <div class="credits">
@@ -408,18 +407,13 @@
     </footer>
 
     <!-- Core JavaScript Files -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/jquery.scrollTo.js"></script>
-    <script src="js/wow.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.easing.min.js"></script>
+    <script src="assets/js/jquery.scrollTo.js"></script>
+    <script src="assets/js/wow.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="js/custom.js"></script>
-    <!--<script src="contactform/contactform.js"></script>-->
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM&callback=initMap"async defer></script>-->
-
-    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgjgicj355MKIaEGsaTzKzSgqpQwMecQM"></script>-->
-
+    <script src="assets/js/custom.js"></script>
 </body>
 
 </html>

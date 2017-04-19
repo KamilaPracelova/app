@@ -5,11 +5,12 @@ var titlize = require('mongoose-title-case'); // Import Mongoose Title Case Plug
 var validate = require('mongoose-validator'); // Import Mongoose Validator Plugin
 
 var StorySchema = new Schema({
-    story_title: { type: String },
+	user_id: { type: String },
+    story_title: { type: String, required: true },
     story_subtitle: { type: String },
-    story_description: { type: String },
+    story_description: { type: String, required: true},
     story_title_image: { type: String },
-
+    story_images: []
 });
 
 module.exports = mongoose.model('Story', StorySchema); // Export User Model for us in API

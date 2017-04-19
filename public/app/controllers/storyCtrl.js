@@ -1,4 +1,4 @@
-angular.module('storyController', ['storyServices'])
+angular.module('storyController', ['storyServices', 'userServices'])
 
   .controller('createStoryCtrl', function ($http, $location, Story, User) {
 
@@ -8,10 +8,7 @@ angular.module('storyController', ['storyServices'])
 
     this.createStory = function (storyData) {
       app.errorMsg = false; // nezobrazuje errorMsg na stranke
-      console.log(this.storyData);
       Story.createStory(app.storyData).then(function (data) {
-        console.log(data.data.success);
-        console.log(data.data.message);
         if (data.data.success) {
           app.successMsg = data.data.message;
           $location.path('/createstory');
@@ -23,18 +20,36 @@ angular.module('storyController', ['storyServices'])
   })
 
 
-  .controller('allStoryCtrl', function (Story, $scope, $http, $location) {
-
+  .controller('allStoryCtrl', function (Story, $scope, $http, $location, User) {
     var app = this;
+
     function getAllStories() {
-      Story.getAllStories().then(function (data) {
-        if (data.data.success) {
-          app.stories = data.data.stories;
-          console.log(data);
-        }
-      });
+        // get the stories for a user
+        Story.getAllStories().then(function(response) {
+          console.log(response.data);
+
+          if (response.data.success) {
+            app.stories = response.data.stories;
+          }
+        });
     }
-    getAllStories()
+
+    getAllStories();
+  })
+
+  .controller('userStoriesCtrl', function(Story, $scope, $http, $location, User) {
+    var app = this;
+
+    function getAllUserStories() {
+        // get the stories for a user
+        Story.getAllUserStories().then(function(response) {
+          if (response.data.success) {
+            app.stories = response.data.stories;
+          }
+        });
+    }
+
+    getAllUserStories();
   })
 
   .controller('showStoryCtrl', function (Story, $scope, $routeParams) {
@@ -43,15 +58,17 @@ angular.module('storyController', ['storyServices'])
 
     Story.getStory($routeParams.id).then(function (data) {
       if (data.data.success) {
-        console.log($routeParams.id);
-        console.log(data);
-        $scope.storyTitle = data.data.story.story_title;
-        $scope.storySubtitle = data.data.story.story_subtitle;
-        $scope.storyDescription = data.data.story.story_description;
-        $scope.storyTitleImage = data.data.story.story_title_image;
+        let story = data.data.story;
+
+        $scope.storyTitle = story.story_title;
+        $scope.storySubtitle = story.story_subtitle;
+        $scope.storyDescription = story.story_description;
+        $scope.storyTitleImage = story.story_title_image;
+        $scope.storyId = story._id;
+        $scope.images = story.story_images;
       }
       else {
-        console.log('fuck');
+        console.log('fuck'); // rofl xD
       }
     })
   })

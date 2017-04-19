@@ -141,7 +141,7 @@ angular.module('mainController', ['authServices', 'userServices', 'storyServices
                     checkLoginStatus = data.data.username;
                     app.useremail = data.data.email; // Get the user e-mail for us ein index
                     User.getPermission().then(function(data) {
-                        if (data.data.permission === 'admin' || data.data.permission === 'moderator') {
+                        if (data.data.permission === 'admin' || data.data.permission === 'curator') {
                             app.authorized = true; // Set user's current permission to allow management
                             app.loadme = true; // Show main HTML now that data is obtained in AngularJS
                         } else {

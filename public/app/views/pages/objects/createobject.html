@@ -18,7 +18,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="title" class="small">Názov objektu</label>  
   <div class="col-md-4">
-  <input class="form-control" id="title" name="title" type="text" placeholder="Názov objektu" maxlength="50" ng-model="objectcreate.objectData.title">
+  <input class="form-control" id="title" name="title" type="text" placeholder="Názov objektu" maxlength="100" ng-model="objectcreate.objectData.title">
   </div>
 </div>
 
@@ -26,7 +26,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="creator">Autor objektu</label>
   <div class="col-md-4">                     
-    <input class="form-control" id="creator" name="creator" placeholder="Priezvisko Meno" maxlength="150" ng-model="objectcreate.objectData.creator">
+    <input class="form-control" id="creator" name="creator" placeholder="Priezvisko Meno" maxlength="100" ng-model="objectcreate.objectData.creator">
   </div>
 </div>
 
@@ -34,7 +34,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="subject">Kľúčové slová</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="subject" name="subject" placeholder="kľúčové slovo 1, kľúčové slovo 2, ...." ng-model="objectcreate.objectData.subject"></textarea>
+    <textarea class="form-control" id="subject" name="subject" placeholder="kľúčové slovo 1, kľúčové slovo 2, ...." maxlength="150" ng-model="objectcreate.objectData.subject"></textarea>
   </div>
 </div>
 
@@ -42,7 +42,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="description">Opis objektu</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="description" name="description" placeholder="Opis objektu" ng-model="objectcreate.objectData.description"></textarea>
+    <textarea class="form-control" id="description" name="description" placeholder="Opis objektu" maxlength="500" ng-model="objectcreate.objectData.description"></textarea>
   </div>
 </div>
 
@@ -108,7 +108,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="identifier">Identifikátor</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="identifier" name="identifier" placeholder="Spravuje" ng-model="objectcreate.objectData.identifier"></textarea>
+    <textarea class="form-control" id="identifier" name="identifier" placeholder="inventárne číslo" ng-model="objectcreate.objectData.identifier"></textarea>
   </div>
 </div>
 
@@ -116,7 +116,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="auhors_rights">Autorské práva</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="auhors_rights" name="auhors_rights" placeholder="meno Autora" ng-model="objectcreate.objectData.auhors_rights"></textarea>
+    <textarea class="form-control" id="auhors_rights" name="auhors_rights" placeholder="meno Autora alebo voľné dielo" ng-model="objectcreate.objectData.auhors_rights"></textarea>
   </div>
 </div>
 
@@ -124,7 +124,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="property_rights">Vlastnícke práva</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="property_rights" name="property_rights" placeholder="Prispievateľ" ng-model="objectcreate.objectData.property_rights"></textarea>
+    <textarea class="form-control" id="property_rights" name="property_rights" placeholder="Názov inštitúcie" ng-model="objectcreate.objectData.property_rights"></textarea>
   </div>
 </div>
 
@@ -181,7 +181,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="measurements">Rozmery</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="measurements" name="measurements" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.measurements"></textarea>
+    <textarea class="form-control" id="measurements" name="measurements" placeholder="49.0 x 65.0 x 35.0 (Š x V x H)" ng-model="objectcreate.objectData.measurements"></textarea>
   </div>
 </div>
 
@@ -189,7 +189,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="materials">Materiál</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="materials" name="materials" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.materials"></textarea>
+    <textarea class="form-control" id="materials" name="materials" placeholder="plátno, kov, kameň" ng-model="objectcreate.objectData.materials"></textarea>
   </div>
 </div>
 
@@ -197,7 +197,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="techniques">Techniky</label>
   <div class="col-md-4">                     
-    <textarea class="form-control" id="techniques" name="techniques" placeholder="url zdigitalizovaného objektu" ng-model="objectcreate.objectData.techniques"></textarea>
+    <textarea class="form-control" id="techniques" name="techniques" placeholder="olej, kresba" ng-model="objectcreate.objectData.techniques"></textarea>
   </div>
 </div>
 
